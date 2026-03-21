@@ -12,4 +12,9 @@ class Product {
     required this.image,
     this.fav = false,
   });
+
+  @override
+  String toString() {
+    return "Product(id: $id, title: $title, price: $price, image: $image, fav: $fav);";
+  }
 } 
