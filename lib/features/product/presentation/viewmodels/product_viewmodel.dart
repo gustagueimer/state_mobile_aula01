@@ -7,18 +7,10 @@ import '../../domain/repositories/product_repository.dart';
 class ProductViewModel {
   final ProductRepository repository;
   final WidgetRef ref;
-  dynamic productState;
 
   ProductViewModel(this.repository, this.ref);
 
-  void initialize() {
-    ref.watch(productStateNotifierProvider);
-  }
-
   Future<void> loadProducts() async {
-    if(productState == null) {
-      initialize();
-    }
     ref.read(productStateNotifierProvider.notifier).changeLoading();
     try {
       final products = await repository.getProducts();
