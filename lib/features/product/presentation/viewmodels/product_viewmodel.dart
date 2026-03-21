@@ -11,13 +11,13 @@ class ProductViewModel {
 
   ProductViewModel(this.repository, this.ref);
 
-  void initializ() {
+  void initialize() {
     ref.watch(productStateNotifierProvider);
   }
 
   Future<void> loadProducts() async {
     if(productState == null) {
-      initializ();
+      initialize();
     }
     ref.read(productStateNotifierProvider.notifier).changeLoading();
     try {
