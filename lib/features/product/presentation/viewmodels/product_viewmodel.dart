@@ -1,27 +1,40 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:product_app/features/product/domain/entities/product.dart';
+import 'package:product_app/features/product/presentation/states/product_state_provider.dart';
 import '../../domain/repositories/product_repository.dart';
-import './product_state.dart';
-import 'package:flutter/foundation.dart';
 
 class ProductViewModel {
   final ProductRepository repository;
+  final WidgetRef ref;
+  dynamic productState;
 
-  final ValueNotifier<ProductState> state = ValueNotifier(const ProductState());
+  ProductViewModel(this.repository, this.ref);
 
-  ProductViewModel(this.repository);
+  void initializ() {
+    ref.watch(productStateNotifierProvider);
+  }
 
   Future<void> loadProducts() async {
-    state.value = state.value.copyWith(isLoading: true);
+    if(productState == null) {
+      initializ();
+    }
+    ref.read(productStateNotifierProvider.notifier).changeLoading();
     try {
       final products = await repository.getProducts();
-      state.value = state.value.copyWith(
-        isLoading: false,
-        products: products,
-      );
+      repository.saveCache(products);
+      ref.read(productStateNotifierProvider.notifier).changeProductList(products);
+      ref.read(productStateNotifierProvider.notifier).changeLoading();
     } catch (e) {
-      state.value = state.value.copyWith(
-        isLoading: false,
-        error: e.toString(),
-      );
+      ref.read(productStateNotifierProvider.notifier).changeError(e.toString());
+      ref.read(productStateNotifierProvider.notifier).changeLoading();
     }
+  }
+
+  MaterialColor fave(Product p) {
+    if(p.fav == true) {
+      return Colors.amber;
+    }
+    return Colors.grey;
   }
 }

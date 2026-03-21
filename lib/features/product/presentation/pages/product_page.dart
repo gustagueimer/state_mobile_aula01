@@ -1,36 +1,47 @@
-import '../viewmodels/product_viewmodel.dart';
-import '../viewmodels/product_state.dart';
-import 'package:flutter/material.dart';
+//import 'package:product_app/features/product/presentation/states/produto_riverpod_state.dart';
 
-class ProductPage extends StatelessWidget {
+import 'package:product_app/features/product/presentation/states/product_state_provider.dart';
+
+import '../viewmodels/product_viewmodel.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class ProductPage extends ConsumerWidget {
   final ProductViewModel viewModel;
   const ProductPage({super.key, required this.viewModel});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plop = ref.watch(productStateNotifierProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text("Products")),
-      body: ValueListenableBuilder<ProductState>(
-        valueListenable: viewModel.state,
-        builder: (context, state, _) {
-          if(state.isLoading) {
+      body: Builder(
+        builder: (context) {
+          if(plop.isLoading == true) {
             return const Center(child: CircularProgressIndicator());
           }
-          if(state.error != null) {
-            return Center(child: Text(state.error!));
+          if(plop.error != null) {
+            return Center(child: Text(plop.error!));
           }
           return ListView.builder(
-            itemCount: state.products.length,
+            itemCount: plop.products.length,
             itemBuilder: (context, index) {
-              final product = state.products[index];
+              final product = plop.products[index];
               return ListTile(
                 leading: Image.network(product.image),
                 title: Text(product.title),
                 subtitle: Text("\$${product.price}"),
+                trailing: IconButton(onPressed: () => {print(product)},
+                 icon: Icon(
+                  Icons.star,
+                  color: viewModel.fave(product),
+                  )
+                ),
               );
             },
           );
-        },
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: viewModel.loadProducts,

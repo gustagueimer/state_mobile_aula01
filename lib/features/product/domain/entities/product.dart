@@ -3,11 +3,13 @@ class Product {
   final String title;
   final double price;
   final String image;
+  final bool fav;
   
   const Product({
     required this.id,
     required this.title,
     required this.price,
     required this.image,
+    this.fav = false,
   });
 } 
