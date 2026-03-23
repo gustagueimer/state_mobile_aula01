@@ -30,8 +30,12 @@ class ProductStateNotifier extends Notifier<ProductState> {
       return;
     }
     int idx = state.products.lastIndexWhere((product) => product.id == p.id);
+    /*
     state.products.removeAt(idx);
     state.products.add(Product(id: p.id, price: p.price, title: p.title, image: p.image, fav: favState!)); 
+    */
+    state.products[idx] = state.products.elementAt(idx).copyWith(p.id, p.title, p.price, p.image, favState);
+    print(state.products.elementAt(idx).toString());
   }
 }
 

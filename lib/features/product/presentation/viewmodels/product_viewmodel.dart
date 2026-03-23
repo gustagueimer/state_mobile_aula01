@@ -11,24 +11,24 @@ class ProductViewModel {
   ProductViewModel(this.repository, this.ref);
 
   Future<void> loadProducts() async {
-    ref.read(productStateNotifierProvider.notifier).changeLoading();
+    ref.watch(productStateNotifierProvider.notifier).changeLoading();
     try {
       final products = await repository.getProducts();
       repository.saveCache(products);
-      ref.read(productStateNotifierProvider.notifier).changeProductList(products);
-      ref.read(productStateNotifierProvider.notifier).changeLoading();
+      ref.watch(productStateNotifierProvider.notifier).changeProductList(products);
+      ref.watch(productStateNotifierProvider.notifier).changeLoading();
     } catch (e) {
-      ref.read(productStateNotifierProvider.notifier).changeError(e.toString());
-      ref.read(productStateNotifierProvider.notifier).changeLoading();
+      ref.watch(productStateNotifierProvider.notifier).changeError(e.toString());
+      ref.watch(productStateNotifierProvider.notifier).changeLoading();
     }
   }
 
   void changefav(Product p) {
     if(!p.fav) {
-    ref.read(productStateNotifierProvider.notifier).changeFav(p, true);
+    ref.watch(productStateNotifierProvider.notifier).changeFav(p, true);
     return;
     }
-    ref.read(productStateNotifierProvider.notifier).changeFav(p, false);
+    ref.watch(productStateNotifierProvider.notifier).changeFav(p, false);
   }
 
   MaterialColor fave(Product p) {
