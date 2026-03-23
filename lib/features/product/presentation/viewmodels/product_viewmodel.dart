@@ -23,8 +23,16 @@ class ProductViewModel {
     }
   }
 
+  void changefav(Product p) {
+    if(!p.fav) {
+    ref.read(productStateNotifierProvider.notifier).changeFav(p, true);
+    return;
+    }
+    ref.read(productStateNotifierProvider.notifier).changeFav(p, false);
+  }
+
   MaterialColor fave(Product p) {
-    if(p.fav == true) {
+    if(p.fav) {
       return Colors.amber;
     }
     return Colors.grey;

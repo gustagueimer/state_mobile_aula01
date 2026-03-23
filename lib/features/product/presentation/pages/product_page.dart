@@ -32,7 +32,7 @@ class ProductPage extends ConsumerWidget {
                 leading: Image.network(product.image),
                 title: Text(product.title),
                 subtitle: Text("\$${product.price}"),
-                trailing: IconButton(onPressed: () => {print(product)},
+                trailing: IconButton(onPressed: () => {viewModel.changefav(product)},
                  icon: Icon(
                   Icons.star,
                   color: viewModel.fave(product),

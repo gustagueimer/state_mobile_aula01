@@ -24,6 +24,15 @@ class ProductStateNotifier extends Notifier<ProductState> {
   void changeError(String error) {
     state = state.copyWith(error: error);
   }
+
+  void changeFav(Product p, bool? favState) {
+    if (!state.products.contains(p)) {
+      return;
+    }
+    int idx = state.products.lastIndexWhere((product) => product.id == p.id);
+    state.products.removeAt(idx);
+    state.products.add(Product(id: p.id, price: p.price, title: p.title, image: p.image, fav: favState!)); 
+  }
 }
 
 final productStateNotifierProvider = NotifierProvider<ProductStateNotifier, ProductState>(() {
