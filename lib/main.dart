@@ -21,7 +21,7 @@ class AppRoot extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'TODO Refatoração',
+      title: 'Product Listing 101',
       theme: ThemeData(useMaterial3: true),
       home: ProductPage(
               viewModel: ProductViewModel(
