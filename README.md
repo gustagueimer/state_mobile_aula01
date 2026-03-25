@@ -1,7 +1,34 @@
-# Aula 05 - Atividade 05: Evolução da aplicação que exibe produtos providos de uma API: Implementação de 'favoritar' usando estados
+# Aula 05 - Atividade 05/06: Evolução da aplicação que exibe produtos providos de uma API: Implementação de 'favoritar' usando estados
 
 Uma aplicação desenvolvida seguindo os padrões do MVVM, separando o código em diferentes áreas de acordo com seu propósito. <br>
-A Evolução consiste em adicionar um sistema de cache para ser utilizado quando a API estiver indisponível e implementar uma classe de falha para tratar erros.
+A Evolução atual consiste em adicionar um botão de favoritar para os produtos, com a funcionalidade de ele atualizar o estado da aplicação com o produto favoritado e com o icone mudando de cor caso for favorito ou não.
+
+## Questionario
+**1. O que significa gerenciamento de estado em uma aplicação Flutter?** <br>
+*manter e atualizar dados referentes a interface do app* <br>
+
+**2. Por que manter o estado diretamente dentro dos widgets pode gerar problemas em aplicações maiores?** <br>
+*telas diferentes podem depender de mesmos dados, que precisam ser instânciados em cada tela ao invés de serem centralizados em um lugar só, e lidar com muitos states similarem em diferentes telas é mais complicado que lidar com um state só compartilhado entre diferentes telas* <br>
+
+**3. Qual é o papel do método notifyListeners() na abordagem Provider?** <br>
+*avisar os "ouvintes" do estado que houve uma mudança no estado para que eles atualizem* <br>
+
+**4. Qual é a principal diferença conceitual entre Provider e Riverpod?** <br>
+*providers são widgets enquanto o riverpod é apenas uma classe normal, o provider tem forte acoplamento no buildcontext da tela enquanto a implementação por riverpod é independente de buildcontext* <br>
+
+**5. No padrão BLoC, por que a interface não altera diretamente o estado da aplicação?** <br>
+*o BLoC trabalha com eventos executados pelo usuário que passam por uma camada de lógica antes de alterar o estado da aplicação* <br>
+
+**6. Considere o fluxo do padrão BLoC:
+`` Evento → Bloc → Novo estado → Interface ``
+Qual é a vantagem de organizar o fluxo dessa forma?** <br>
+*você tem um controle maior sobre os eventos que iniciam uma alteração de estado, bem como uma camada exclusiva para implementar processamento lógico sobre o evento antes de atualizar o estado e a interface* <br>
+
+**7. Qual estratégia de gerenciamento de estado foi utilizada em sua implementação?** <br>
+*riverpod* <br>
+
+**8. Durante a implementação, quais foram as principais dificuldades encontradas?** <br> 
+*conseguir implementar o riverpod no viewmodel, visto que o viewmodel em sí não é um widget* <br>
 
 ## Estrutura autal do código do projeto:
 
@@ -33,6 +60,8 @@ A Evolução consiste em adicionar um sistema de cache para ser utilizado quando
     | |_/repositories
     |
     |_/presentation
+      |
+      |_/states
       |
       |_/pages
       |
